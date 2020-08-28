@@ -2,7 +2,12 @@ package com.github.yeriomin.playstoreapi;
 
 import okhttp3.*;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.net.InetAddress;
+import java.net.InetSocketAddress;
+import java.net.Proxy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,23 +19,15 @@ class OkHttpClientAdapter extends HttpClientAdapter {
     OkHttpClient client;
 
     public OkHttpClientAdapter() {
-        setClient(new OkHttpClient.Builder()
-            .connectTimeout(6, TimeUnit.SECONDS)
-            .readTimeout(6, TimeUnit.SECONDS)
-            .cookieJar(new CookieJar() {
-                private final HashMap<HttpUrl, List<Cookie>> cookieStore = new HashMap<HttpUrl, List<Cookie>>();
 
-                public void saveFromResponse(HttpUrl url, List<Cookie> cookies) {
-                    cookieStore.put(url, cookies);
-                }
-
-                public List<Cookie> loadForRequest(HttpUrl url) {
-                    List<Cookie> cookies = cookieStore.get(url);
-                    return cookies != null ? cookies : new ArrayList<Cookie>();
-                }
-            })
-            .build()
-        );
+        try {
+            Proxy proxy= new Proxy(Proxy.Type.HTTP,new InetSocketAddress(InetAddress.getLocalHost(), 8080));
+            client = new OkHttpClient.Builder().proxy(proxy).addInterceptor(new UnzippingInterceptor()).build();
+        }
+        catch (Exception e){
+            System.err.println("Error while creating OkHttpClientAdapter object");
+            e.printStackTrace();
+        }
     }
 
     public void setClient(OkHttpClient client) {
@@ -48,13 +45,18 @@ class OkHttpClientAdapter extends HttpClientAdapter {
     }
 
     @Override
+    public HashMap<String, byte[]> getUp(String url, Map<String, String> params, Map<String, String> headers) throws IOException {
+        return requestUp(new Request.Builder().url(buildUrl(url, params)).get(), headers);
+    }
+
+    @Override
     public byte[] postWithoutBody(String url, Map<String, String> urlParams, Map<String, String> headers) throws IOException {
         return post(buildUrl(url, urlParams), new HashMap<String, String>(), headers);
     }
 
     @Override
     public byte[] post(String url, Map<String, String> params, Map<String, String> headers) throws IOException {
-        headers.put("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
+
 
         FormBody.Builder bodyBuilder = new FormBody.Builder();
         if (null != params && !params.isEmpty()) {
@@ -72,9 +74,6 @@ class OkHttpClientAdapter extends HttpClientAdapter {
 
     @Override
     public byte[] post(String url, byte[] body, Map<String, String> headers) throws IOException {
-        if (!headers.containsKey("Content-Type")) {
-            headers.put("Content-Type", "application/x-protobuf");
-        }
 
         Request.Builder requestBuilder = new Request.Builder()
             .url(url)
@@ -85,8 +84,28 @@ class OkHttpClientAdapter extends HttpClientAdapter {
 
     byte[] post(String url, Request.Builder requestBuilder, Map<String, String> headers) throws IOException {
         requestBuilder.url(url);
-
         return request(requestBuilder, headers);
+    }
+
+    HashMap<String,byte[]> postUp(String url, Request.Builder requestBuilder, Map<String, String> headers) throws IOException {
+        requestBuilder.url(url);
+        return requestUp(requestBuilder, headers);
+    }
+
+    @Override
+    public HashMap<String,byte[]> postUp(String url, Map<String, String> params, Map<String, String> headers) throws IOException {
+        FormBody.Builder bodyBuilder = new FormBody.Builder();
+        if (null != params && !params.isEmpty()) {
+            for (String name: params.keySet()) {
+                bodyBuilder.add(name, params.get(name));
+            }
+        }
+
+        Request.Builder requestBuilder = new Request.Builder()
+                .url(url)
+                .post(bodyBuilder.build());
+
+        return postUp(url, requestBuilder, headers);
     }
 
     byte[] request(Request.Builder requestBuilder, Map<String, String> headers) throws IOException {
@@ -116,6 +135,43 @@ class OkHttpClientAdapter extends HttpClientAdapter {
         }
 
         return content;
+    }
+
+    HashMap<String, byte[]> requestUp(Request.Builder requestBuilder, Map<String, String> headers) throws IOException {
+        Request request = requestBuilder
+                .headers(Headers.of(headers))
+                .build();
+        System.out.println("Requesting: " + request.url().toString());
+
+        Response response = client.newCall(request).execute();
+
+        int code = response.code();
+        byte[] content = response.body().bytes();
+
+        if (code >= 400) {
+            GooglePlayException e = new GooglePlayException("Malformed request", code);
+            if (code == 401 || code == 403) {
+                e = new AuthException("Auth error", code);
+                Map<String, String> authResponse = GooglePlayAPI.parseResponse(new String(content));
+                if (authResponse.containsKey("Error") && authResponse.get("Error").equals("NeedsBrowser")) {
+                    ((AuthException) e).setTwoFactorUrl(authResponse.get("Url"));
+                }
+            } else if (code >= 500) {
+                e = new GooglePlayException("Server error", code);
+            }
+            e.setRawResponse(content);
+            throw e;
+        }
+
+        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
+        ObjectOutputStream out = new ObjectOutputStream(byteOut);
+        out.writeObject(response.headers().toMultimap());
+
+        HashMap<String,byte[]> hashMap = new HashMap();
+        hashMap.put("body", content);
+        hashMap.put("header", byteOut.toByteArray());
+
+        return hashMap;
     }
 
     public String buildUrl(String url, Map<String, String> params) {

@@ -21,7 +21,7 @@ public class PlayStoreApiBuilderTest {
         httpClientAdapter = new MockOkHttpClientAdapter();
         Properties properties = new Properties();
         try {
-            properties.load(getClass().getClassLoader().getSystemResourceAsStream("device-honami.properties"));
+            properties.load(getClass().getClassLoader().getSystemResourceAsStream("device-irbis.properties"));
         } catch (IOException e) {
             fail("device-honami.properties not found");
         }
@@ -87,53 +87,9 @@ public class PlayStoreApiBuilderTest {
         }
     }
 
-    @Test
-    public void buildEmailGsfIdPassword() throws Exception {
-        playStoreApiBuilder
-            .setLocale(Locale.US)
-            .setHttpClient(httpClientAdapter)
-            .setDeviceInfoProvider(deviceInfoProvider)
-            .setEmail(GooglePlayAPITest.EMAIL)
-            .setGsfId(GooglePlayAPITest.GSFID)
-            .setPassword(GooglePlayAPITest.PASSWORD)
-        ;
-        GooglePlayAPI api = playStoreApiBuilder.buildUpon(new MockGooglePlayAPI());
-        Assert.assertEquals("VgXBOjtk7TAASCefEdBRoow60YoyEYSqliUOaaiWkFKmWKZOUK-iXb1UgA184sTRpCVrKg.", api.getToken());
-        Assert.assertEquals(1, httpClientAdapter.getRequests().size());
-        Assert.assertEquals("/auth", httpClientAdapter.getRequests().get(0).url().encodedPath());
-    }
 
-    @Test
-    public void buildGsfIdToken() throws Exception {
-        playStoreApiBuilder
-            .setLocale(Locale.US)
-            .setHttpClient(httpClientAdapter)
-            .setDeviceInfoProvider(deviceInfoProvider)
-            .setGsfId(GooglePlayAPITest.GSFID)
-            .setToken(GooglePlayAPITest.TOKEN)
-        ;
-        GooglePlayAPI api = playStoreApiBuilder.buildUpon(new MockGooglePlayAPI());
-        Assert.assertEquals(GooglePlayAPITest.TOKEN, api.getToken());
-        Assert.assertEquals(0, httpClientAdapter.getRequests().size());
-    }
 
-    @Test
-    public void buildEmailPassword() throws Exception {
-        playStoreApiBuilder
-            .setLocale(Locale.US)
-            .setHttpClient(httpClientAdapter)
-            .setDeviceInfoProvider(deviceInfoProvider)
-            .setEmail(GooglePlayAPITest.EMAIL)
-            .setPassword(GooglePlayAPITest.PASSWORD)
-        ;
-        GooglePlayAPI api = playStoreApiBuilder.buildUpon(new MockGooglePlayAPI());
-        Assert.assertEquals(5, httpClientAdapter.getRequests().size());
-        Assert.assertEquals("/auth", httpClientAdapter.getRequests().get(0).url().encodedPath());
-        Assert.assertEquals("/checkin", httpClientAdapter.getRequests().get(1).url().encodedPath());
-        Assert.assertEquals("/checkin", httpClientAdapter.getRequests().get(2).url().encodedPath());
-        Assert.assertEquals("/auth", httpClientAdapter.getRequests().get(3).url().encodedPath());
-        Assert.assertEquals("/fdfe/uploadDeviceConfig", httpClientAdapter.getRequests().get(4).url().encodedPath());
-        Assert.assertEquals("VgXBOjtk7TAASCefEdBRoow60YoyEYSqliUOaaiWkFKmWKZOUK-iXb1UgA184sTRpCVrKg.", api.getToken());
-        Assert.assertEquals("307edaee584cc716", api.getGsfId());
-    }
+
+
+
 }

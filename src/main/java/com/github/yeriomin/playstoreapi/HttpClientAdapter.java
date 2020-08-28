@@ -16,6 +16,9 @@ public abstract class HttpClientAdapter {
     abstract public String buildUrl(String url, Map<String, String> params);
     abstract public String buildUrlEx(String url, Map<String, List<String>> params);
 
+    abstract public HashMap<String,byte[]> postUp(String url, Map<String, String> params, Map<String, String> headers) throws IOException;
+    abstract public HashMap<String,byte[]> getUp(String url, Map<String, String> params, Map<String, String> headers) throws IOException;
+
     public byte[] get(String url, Map<String, String> params) throws IOException {
         return get(url, params, new HashMap<String, String>());
     }
