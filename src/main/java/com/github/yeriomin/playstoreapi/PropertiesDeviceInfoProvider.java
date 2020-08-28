@@ -68,6 +68,10 @@ public class PropertiesDeviceInfoProvider implements DeviceInfoProvider {
         return properties.keySet().containsAll(Arrays.asList(requiredFields));
     }
 
+    public String getProperties(String in) {
+        return this.properties.getProperty(in);
+    }
+
     public int getSdkVersion() {
         return Integer.parseInt(this.properties.getProperty("Build.VERSION.SDK_INT"));
     }

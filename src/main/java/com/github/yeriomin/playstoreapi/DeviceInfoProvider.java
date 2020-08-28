@@ -9,4 +9,5 @@ public interface DeviceInfoProvider {
     int getSdkVersion();
     int getPlayServicesVersion();
     String getMccmnc();
+    String getProperties(String string);
 }
