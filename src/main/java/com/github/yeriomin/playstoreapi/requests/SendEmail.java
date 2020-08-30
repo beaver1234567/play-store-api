@@ -86,7 +86,7 @@ public class SendEmail extends Requests {
      * @param input
      * @return
      */
-    private HashMap<String, String> parsJSON(String input){
+    private HashMap<String, String> parsJSON(String input) throws IOException {
         input = input.replace(")]}'", "");
         HashMap<String,String> output = new HashMap<>();
         JSONArray reader = new JSONArray(input);
@@ -100,6 +100,21 @@ public class SendEmail extends Requests {
          *
          */
         int status = jsonArray.getInt(1);
+        //case 5: throw new IOException("CAPSHA");
+
+
+        switch(status) {
+            case 1:
+                System.out.println(" mailing address is correct");
+                break;
+            case 5:
+                throw new IOException("captcha");
+            case 7:
+                throw new IOException("Incorrect email address");
+            default:
+                throw new IOException("EMAIL ERROR");
+        }
+
 
         String freq = jsonArray.getString(2);
         /**

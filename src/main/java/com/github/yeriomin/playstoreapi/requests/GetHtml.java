@@ -52,7 +52,7 @@ public class GetHtml extends Requests {
             output.putAll(decomposition(respince));
             return output;
         } else {
-            throw new AuthException("Authentication failed! (login)");
+            throw new AuthException("GetHtml failed!");
         }
     }
 

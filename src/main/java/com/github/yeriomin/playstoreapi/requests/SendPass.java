@@ -18,10 +18,10 @@ import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.*;
  *
  * @input * Ключи:
  * * password - пароль
- * * gsfid - пароль
+ * * gsfid - уникальный id смартфона
  * * freq - массив из запроса (A)
  * * azt - массив из запроса (A)
- * * gf.ttu - массои из запроса (D)
+ * * gf.ttu - массои из запроса (С)
  * * cookie - куки ответа из запроса (C)
  * @return Возвращает HasHMap, размерность 2.
  * * Ключи:
@@ -67,7 +67,7 @@ public class SendPass extends Requests {
             output.putAll(parsJSON(respince));
             return output;
         } else {
-            throw new IOException("SendEmail failed!");
+            throw new IOException("SendPass failed!");
         }
     }
 
@@ -78,8 +78,13 @@ public class SendPass extends Requests {
      * @param input
      * @return
      */
-    public HashMap<String, String> parsJSON(String input) {
+    public HashMap<String, String> parsJSON(String input) throws IOException {
         input = input.replace(")]}'", "");
+
+        if (input.contains("INCORRECT_ANSWER_ENTERED")){
+            throw new IOException("incorrect pass");
+        }
+
         HashMap<String, String> output = new HashMap<>();
         JSONArray reader = new JSONArray(input);
 

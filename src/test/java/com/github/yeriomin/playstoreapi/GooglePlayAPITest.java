@@ -10,8 +10,8 @@ import java.util.*;
 
 public class GooglePlayAPITest {
 
-    public static final String EMAIL = "kar.gi.kar@gmail.com";
-    public static final String PASSWORD = "qweasdzxc228)";
+    public static final String EMAIL = "kar.gggg.kar@gmail.com";
+    public static final String PASSWORD = "qweasdzxc24)";
     public static final String GSFID = "3f1abe856b0fa7fd";
     public static final String TOKEN = "jwSyrOU2RHDv2d82095MoHKOUHhO9KxBbkAoLCMkCKWqB9RUHbvq8VIWufBJcxwRn3_DGQ.";
 

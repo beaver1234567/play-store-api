@@ -12,6 +12,23 @@ import java.util.Map;
 import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.*;
 import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.AZT;
 
+/**
+ * Запрос(E)
+ * Подтверждение
+ *
+ * @input * Ключи:
+ * * gsfid - уникальный id смартфона
+ * * freq - массив из запроса (A)
+ * * ardt - массив из запроса (A)
+ * * gf.ttu - массои из запроса (D)
+ * * cookie - куки ответа из запроса (D)
+ * @return Возвращает HasHMap, размерность 3.
+ * * Ключи:
+ * * cookie - куки ответа
+ * * user_id - id из куков для запроса (G)
+ * * oauth_token - токен из куков для запроса (F)
+ */
+
 public class SendConfirm extends Requests {
 
     public SendConfirm(GooglePlayApiUpdate googlePlayApiUpdate, HashMap<String, String> input) {
@@ -48,7 +65,7 @@ public class SendConfirm extends Requests {
             output.putAll(cookie(getHeader(responseBytes)));
             return output;
         } else {
-            throw new IOException("SendEmail failed!");
+            throw new IOException("SendConfirm failed!");
         }
     }
 

@@ -9,6 +9,20 @@ import java.util.Map;
 import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.EMAIL;
 import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.SEND_OAUTH_HOST;
 
+
+/**
+ * Запрос(G)
+ * Подтверждение
+ *
+ * @input * Ключи:
+ * * gsfid - уникальный id смартфона
+ * * email - почта
+ * * Token - токен  для запроса (G)
+ * @return Возвращает HasHMap, размерность 3.
+ * * Ключи:
+ * * Auth - Окончательный токен для запросов.
+ */
+
 public class SendOAuthLast extends Requests {
 
 
@@ -48,7 +62,7 @@ public class SendOAuthLast extends Requests {
             output.putAll(parsJSON(respince));
             return output;
         } else {
-            throw new IOException("SendEmail failed!");
+            throw new IOException("SendOAuhtLas failed!");
         }
     }
 

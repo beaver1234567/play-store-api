@@ -12,6 +12,24 @@ import java.util.Map;
 import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.*;
 import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.GFTTU;
 
+
+/**
+ * Запрос(F)
+ * Подтверждение
+ *
+ * @input * Ключи:
+ * * gsfid - уникальный id смартфона
+ * * email - почта
+ * * oauth_token - токен из куков для запроса (E)
+ * * cookie - куки ответа из запроса (E)
+ * @return Возвращает HasHMap, размерность 2.
+ * * Ключи:
+ * * Token - токен для запроса (G)
+ *
+ *
+ * * Auth - Окончательный токен для запросов.
+ */
+
 public class SendOAuth extends Requests {
 
 
@@ -47,7 +65,7 @@ public class SendOAuth extends Requests {
             output.putAll(parsJSON(respince));
             return output;
         } else {
-            throw new IOException("SendEmail failed!");
+            throw new IOException("SendOAuth failed!");
         }
     }
 
