@@ -9,8 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.util.*;
 
-import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.COOKIE;
-import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.GSFID;
+import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.*;
 
 /**
  * Общий класс для всех запросов
@@ -45,9 +44,9 @@ abstract class Requests {
     protected Map<String, String> getAuthBody() {
         Map<String, String> headers = new HashMap<String, String>();
         headers.put("androidId", input.get(GSFID));
-        headers.put("lang", "ru-RU");
-        headers.put("google_play_services_version", "203019015");
-        headers.put("sdk_version", "24");
+        headers.put("lang", RU_RU);
+        headers.put("google_play_services_version", GSF);
+        headers.put("sdk_version", VERSIONSDK);
         headers.put("callerPkg", "com.google.android.gms");
         headers.put("callerSig", "38918a453d07199354f8b19af05ec6562ced5788");
         return headers;

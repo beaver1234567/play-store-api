@@ -51,13 +51,13 @@ public class SendConfirm extends Requests {
 
         body.put("source","com.android.vending");
         body.put("continue","https://accounts.google.com/o/android/auth?lang=ru&cc&langCountry=ru_&xoauth_display_name=Android+Device&source=android&tmpl=new_account&return_user_id=true");
-        body.put("f.req","[\"gf.siesic\",1,\"RU\",\"ru\",\"default\",[\"X0FfAjryY6A=\",\"UpmUvzm8N0Y=\",\"R0MVauKaZ8Y=\",\"F7TABF8fS3E=\"]]");
+        body.put("f.req","[\"gf.siesic\",1,\""+RU+"\",\""+ru+"\",\"default\",[\"X0FfAjryY6A=\",\"UpmUvzm8N0Y=\",\"R0MVauKaZ8Y=\",\"F7TABF8fS3E=\"]]");
         body.put(AZT,input.get(AZT));
         body.put("cookiesDisabled","false");
-        body.put("deviceinfo","[\""+input.get(GSFID)+"\",24,"+deviceInfoProvider.getPlayServicesVersion() +",[],true,\"RU\",0,null,[],\"EmbeddedSetupAndroid\",null,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],1,null,null,null,2,null,false,2]");
+        body.put("deviceinfo","[\""+input.get(GSFID)+"\","+VERSIONSDK+","+deviceInfoProvider.getPlayServicesVersion() +",[],true,\""+RU+"\",0,null,[],\"EmbeddedSetupAndroid\",null,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],1,null,null,null,2,null,false,2]");
         body.put("gmscoreversion",Integer.toString(deviceInfoProvider.getPlayServicesVersion()));
         HashMap<String,byte[]> responseBytes = client.postUp(
-                SEND_CONFIRM_HOST + "?ardt="+input.get(ARDT)+"%3D&hl=ru&TL="+input.get(GFTTU)+"&_reqid="+getReqid()+"&rt=j", body, headers);
+                SEND_CONFIRM_HOST + "?ardt="+input.get(ARDT)+"%3D&hl="+ru+"&TL="+input.get(GFTTU)+"&_reqid="+getReqid()+"&rt=j", body, headers);
 
         String respince = new String(getBody(responseBytes));
 

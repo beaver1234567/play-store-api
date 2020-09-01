@@ -7,6 +7,10 @@ import java.util.*;
 
 public class GooglePlayApiUpdate {
 
+    private DeviceInfoProvider deviceInfoProvider;
+
+    private HttpClientAdapter client;
+
 
     /**
      * Константы которые можно заменить набором системных, пока ну времени их искать поэтому тут
@@ -47,10 +51,24 @@ public class GooglePlayApiUpdate {
     public static final String GSFID = "gsfid";
 
 
-    private DeviceInfoProvider deviceInfoProvider;
+    /**
+     * Версия sdk с которой был реверснут логин.
+     * Думаю что лучше еге, не брать из properties
+     */
+    public static final String VERSIONSDK = "24";
 
-    private HttpClientAdapter client;
+    /**
+     * Это Google Services Framework
+     * также в запросах иногда называется gmscoreversion
+     */
+    public static final String GSF = "203019015";
 
+    /**
+     * Русский язык в запросах, не использую его в accept-language
+     */
+    public static final String ru = "ru";
+    public static final String RU = "RU";
+    public static final String RU_RU = "ru-RU";
 
     public GooglePlayApiUpdate() {
 
@@ -72,6 +90,7 @@ public class GooglePlayApiUpdate {
         main.putAll(new SendConfirm(this,main).make());
         main.putAll(new SendOAuth(this,main).make());
         main.putAll(new SendOAuthLast(this,main).make());
+
         System.out.println("");
         return "";
     }

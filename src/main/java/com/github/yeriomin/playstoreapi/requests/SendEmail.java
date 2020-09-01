@@ -47,6 +47,7 @@ public class SendEmail extends Requests {
         HashMap<String, String> output = new HashMap<>();
 
         Map<String, String> headers = getDefaultHeaders();
+        headers.put("Content-Type", "application/x-www-form-urlencoded;charset=UTF-8");
         StringBuilder stringBuilder = new StringBuilder();
         input.forEach((x, y) -> {
             if (x.contains(COOKIE)) {
@@ -59,12 +60,11 @@ public class SendEmail extends Requests {
 
         body.put("source","com.android.vending");
         body.put("continue","https://accounts.google.com/o/android/auth?lang=ru&cc&langCountry=ru_&xoauth_display_name=Android+Device&source=android&tmpl=new_account&return_user_id=true");
-        body.put("f.req","[\""+ input.get(EMAIL) +"\",\"" + input.get(FREQ) +"\",[],null,\"RU\",null,null,2,true,true,[null,null,[1,1,0,1,\"https://accounts.google.com/EmbeddedSetup\",null,[],4,[],\"EmbeddedSetupAndroid\",null,[]],2,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],null,null,null,false],\""+ input.get(EMAIL) +"\",null,null,null,true,true,[]]");
-
-        body.put("bgRequest","[\"identifier\",\"!NjWlNRRCTL9baV5PDUtY9vUeYav7HAQCAAAFH1IAAABrmQHkoY69IJ4px8uE4OchQsSi_O4yKHnBjeWEBfJEZde8JM6oKOllVM7Q803UFG_YjKfpN7RXNgjGv5AZBc26Qr15W0e8f4saIzSCJiYvgTN_TCSoKDp2tdy0I84GKeUoxFCeetMUE6-JO36KZISc4aGhgYnAdkU3j4PsVmE4lQyIQfZzg2i1EZ8XNjGxV212F7hCoJbHNoN5S-iWvH8u48ohr86hVoyRKdxyn9diCkyDUm6y2SKDi91ZrT8gy0aLgJZr_XhpLJBJDySw-fk7nQqgA0LDhjgIeOuRa2WBloQI0e-p2mOrIRAtWgVXT_DesaBg2bF8w0Q4Unq-z1WN-bxELKGue11O-D1aPmk9kx71jyxnJ-WGyEoVNpgPqSB81oRafS0NqMUIkuz7mUJcz3n2A-V9L9Nnsm7XwriPce6ZqLf-q5Tfy3Aq1xISGRe31Cf1pVVU6a51HEt29Orm3GycDKfuR1sXeVC6B0T84wDqgMkabiT0dEB8MDm8qQxAeRBd0aP6JkssRugXPR-vBrbsNi2cXNDdOhpG1gDbg_bND1iBZ0Di3CPiAfWng70RRmP740-nSYTP_jJwhg0eSRGqwYse54jgnHSCcRE5SrRVVI-gEKVVCGPoe8-VHPnVALsCG64THQ\"]");
+        body.put("f.req","[\""+ input.get(EMAIL) +"\",\"" + input.get(FREQ) +"\",[],null,\""+RU+"\",null,null,2,true,true,[null,null,[1,1,0,1,\"https://accounts.google.com/EmbeddedSetup\",null,[],4,[],\"EmbeddedSetupAndroid\",null,[]],2,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],null,null,null,false],\""+ input.get(EMAIL) +"\",null,null,null,true,true,[]]");
+        body.put("bgRequest","[\"identifier\",\"!FxSlFDVC4Y-tmGRKjj5YKmkRW6653rYCAAAFZ1IAAABiCgEBT4bpN81zXAx_1rahHUUN2qS3JVWeWmlmw9MIxyFGBUw9rgDsGPX68Kewk8rQygUcHluyBC2Q-0Kdw8wnnmGlUq8083cQEFgabu8IEKxsP8tV5b-fmAudf1JauVmypz_FgjGKmZyJSpvz4IY1z4lTAa1KkWtSCGkJgWu7salAJOalUCb-fTWaq-JxupzwLa_SxhEVGfLePDeR_hzOtlrnvPRTFH7BgUrip2XsH9HfYgG0ffSs-a-sarRolm1ffOaijT9H2KJO09W2DyCcWTXfPcT9ybpboiTKWSXNggPzzi-3jGP32GS01YwpVgIsdI_uMS8qS-cmaj_-OihIc03LqyqZAessyyXX_jw5-fyXUIyzPMrwhm6MWIzVuaZcTmNJ7Cjrd5hvUrl_1lTQertBPBPAY8asLhbvIOBxBr4A5n6K7A-kKibFtx81xNk7GwBRZQdykiZdkSR22axu7NBQQr2iwPSAp37TuNE9zqI09o8khJc0YC7vPYgGJ8Co3zvF-g8MTp6OsLV4vuC6J26pxK36bgGBjaM6YHivF8UbWsN4XlAV40iOs9MfTKzRJ7UsTQSEEwVGvFp4MySYnxmwCw5MErcxdbICvr26iv2Y0b-WS-CUBFytKcxPyu-L0fnI0O6AqzQG7JIX_-WgERKo25l1Qtg9nwxH4oOgVxw74pTqGR27eYWCq2it7cJfdTa2sK0K35JhN27U3YHvA1Ahd3WBW8OxkJqYNkJnX8V2KGh-cDekbYT4EDIhH21irc-O57gbHjCua_17V37vjgEJxm8EjLN5O7Todc2HnzXg8yHU8pkHqCGaBw18MsAWmo-hhASSmBNrQjsqVl9gUmVtDuKmdiiEkDjfG9PfwN72eu5XDWjahx_s6edLPL6bQzgCYHlfOcqrs1HutgLsku4tDCoLFV5jiqjJiz2GO7CSqVCTyjyg-TUv63GXOJXiJeKX5oi-g1rw8VeMOGoqBaHp0AtWDcyH_9f5eVCSzhd9HA\"]");
         body.put(AZT,input.get(AZT));
         body.put("cookiesDisabled","false");
-        body.put("deviceinfo","[\""+input.get(GSFID)+"\",24,"+deviceInfoProvider.getPlayServicesVersion() +",[],true,\"RU\",0,null,[],\"EmbeddedSetupAndroid\",null,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],1,null,null,null,2,null,false,2]");
+        body.put("deviceinfo","[\""+input.get(GSFID)+"\","+VERSIONSDK+","+deviceInfoProvider.getPlayServicesVersion() +",[],true,\""+RU+"\",0,null,[],\"EmbeddedSetupAndroid\",null,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],1,null,null,null,2,null,false,2]");
         body.put("gmscoreversion",Integer.toString(deviceInfoProvider.getPlayServicesVersion()));
 
 

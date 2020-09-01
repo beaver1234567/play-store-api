@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.InetSocketAddress;
+import java.net.PasswordAuthentication;
 import java.net.Proxy;
+import java.net.Authenticator;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -21,6 +23,16 @@ class OkHttpClientAdapter extends HttpClientAdapter {
     public OkHttpClientAdapter() {
 
         try {
+
+            /*
+            Authenticator.setDefault(new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication("yLIRMJ0hBN", "EHwb6oyOkd".toCharArray());
+                }
+            });
+
+            Proxy proxy= new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("176.53.172.115", 45488));*/
             Proxy proxy= new Proxy(Proxy.Type.HTTP,new InetSocketAddress(InetAddress.getLocalHost(), 8080));
             client = new OkHttpClient.Builder().proxy(proxy).addInterceptor(new UnzippingInterceptor()).build();
         }
