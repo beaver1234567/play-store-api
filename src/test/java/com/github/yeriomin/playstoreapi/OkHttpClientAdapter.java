@@ -33,7 +33,10 @@ class OkHttpClientAdapter extends HttpClientAdapter {
             });
 
             Proxy proxy= new Proxy(Proxy.Type.SOCKS,new InetSocketAddress("176.53.172.115", 45488));*/
-            Proxy proxy= new Proxy(Proxy.Type.HTTP,new InetSocketAddress(InetAddress.getLocalHost(), 8080));
+            /**
+             * Настройка прокси
+             */
+            Proxy proxy= new Proxy(Proxy.Type.HTTP,new InetSocketAddress(InetAddress.getLocalHost(), 8090));
             client = new OkHttpClient.Builder().proxy(proxy).addInterceptor(new UnzippingInterceptor()).build();
         }
         catch (Exception e){

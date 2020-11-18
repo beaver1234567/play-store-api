@@ -85,6 +85,10 @@ public class SendPass extends Requests {
             throw new IOException("incorrect pass");
         }
 
+        if (input.contains("LOGIN_CHALLENGE")){
+            throw new IOException("Phone confirmation needed");
+        }
+
         HashMap<String, String> output = new HashMap<>();
         JSONArray reader = new JSONArray(input);
 

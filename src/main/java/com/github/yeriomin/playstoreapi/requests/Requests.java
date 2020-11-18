@@ -14,7 +14,7 @@ import static com.github.yeriomin.playstoreapi.GooglePlayApiUpdate.*;
 /**
  * Общий класс для всех запросов
  */
-abstract class Requests {
+public abstract class Requests {
 
     protected HttpClientAdapter client;
     protected DeviceInfoProvider deviceInfoProvider;
@@ -127,21 +127,28 @@ abstract class Requests {
      */
     protected HashMap<String, String> cookie(Map<String, List<String>> map) {
         HashMap<String, String> output = new HashMap<>();
-        for (String input : Objects.requireNonNull(map.get("set-cookie"))) {
 
-            if (input.contains("user_id")) {
-                output.put("user_id", input.replace("user_id=", "").substring(0, 21));
-                continue;
+        try {
+
+            for (String input : Objects.requireNonNull(map.get("set-cookie"))) {
+
+                if (input.contains("user_id")) {
+                    output.put("user_id", input.replace("user_id=", "").substring(0, 21));
+                    continue;
+                }
+
+                if (input.contains("oauth_token")) {
+                    output.put("oauth_token", input.replace("oauth_token=", "").substring(0, 96));
+                    continue;
+                }
+
+                String temp[] = input.split("=", 2);
+                output.put(COOKIE + temp[0], temp[1]);
             }
-
-            if (input.contains("oauth_token")) {
-                output.put("oauth_token", input.replace("oauth_token=", "").substring(0, 96));
-                continue;
-            }
-
-            String temp[] = input.split("=", 2);
-            output.put(COOKIE + temp[0], temp[1]);
+        }catch (Exception e){
+            e.printStackTrace();
         }
+
         return output;
     }
 

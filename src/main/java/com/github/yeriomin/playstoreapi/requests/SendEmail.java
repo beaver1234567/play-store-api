@@ -61,7 +61,13 @@ public class SendEmail extends Requests {
         body.put("source","com.android.vending");
         body.put("continue","https://accounts.google.com/o/android/auth?lang=ru&cc&langCountry=ru_&xoauth_display_name=Android+Device&source=android&tmpl=new_account&return_user_id=true");
         body.put("f.req","[\""+ input.get(EMAIL) +"\",\"" + input.get(FREQ) +"\",[],null,\""+RU+"\",null,null,2,true,true,[null,null,[1,1,0,1,\"https://accounts.google.com/EmbeddedSetup\",null,[],4,[],\"EmbeddedSetupAndroid\",null,[]],2,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],null,null,null,false],\""+ input.get(EMAIL) +"\",null,null,null,true,true,[]]");
-        body.put("bgRequest","[\"identifier\",\"!FxSlFDVC4Y-tmGRKjj5YKmkRW6653rYCAAAFZ1IAAABiCgEBT4bpN81zXAx_1rahHUUN2qS3JVWeWmlmw9MIxyFGBUw9rgDsGPX68Kewk8rQygUcHluyBC2Q-0Kdw8wnnmGlUq8083cQEFgabu8IEKxsP8tV5b-fmAudf1JauVmypz_FgjGKmZyJSpvz4IY1z4lTAa1KkWtSCGkJgWu7salAJOalUCb-fTWaq-JxupzwLa_SxhEVGfLePDeR_hzOtlrnvPRTFH7BgUrip2XsH9HfYgG0ffSs-a-sarRolm1ffOaijT9H2KJO09W2DyCcWTXfPcT9ybpboiTKWSXNggPzzi-3jGP32GS01YwpVgIsdI_uMS8qS-cmaj_-OihIc03LqyqZAessyyXX_jw5-fyXUIyzPMrwhm6MWIzVuaZcTmNJ7Cjrd5hvUrl_1lTQertBPBPAY8asLhbvIOBxBr4A5n6K7A-kKibFtx81xNk7GwBRZQdykiZdkSR22axu7NBQQr2iwPSAp37TuNE9zqI09o8khJc0YC7vPYgGJ8Co3zvF-g8MTp6OsLV4vuC6J26pxK36bgGBjaM6YHivF8UbWsN4XlAV40iOs9MfTKzRJ7UsTQSEEwVGvFp4MySYnxmwCw5MErcxdbICvr26iv2Y0b-WS-CUBFytKcxPyu-L0fnI0O6AqzQG7JIX_-WgERKo25l1Qtg9nwxH4oOgVxw74pTqGR27eYWCq2it7cJfdTa2sK0K35JhN27U3YHvA1Ahd3WBW8OxkJqYNkJnX8V2KGh-cDekbYT4EDIhH21irc-O57gbHjCua_17V37vjgEJxm8EjLN5O7Todc2HnzXg8yHU8pkHqCGaBw18MsAWmo-hhASSmBNrQjsqVl9gUmVtDuKmdiiEkDjfG9PfwN72eu5XDWjahx_s6edLPL6bQzgCYHlfOcqrs1HutgLsku4tDCoLFV5jiqjJiz2GO7CSqVCTyjyg-TUv63GXOJXiJeKX5oi-g1rw8VeMOGoqBaHp0AtWDcyH_9f5eVCSzhd9HA\"]");
+
+        /**
+         * bgRequest Данный параметр можно получить из за запроса С.
+         */
+        body.put("bgRequest", "[\"identifier\",\"!TE-lT2bNAAUrmx8XK0LFC9zpFlVkC1hMC81leyHyQgIAAASqUgAAAXJoAQcKAI1lu-yfaTDGrYQRpQEFIoFGOA-WYj50Qnj7xW54agRhv4gQmVxpwV1jCAlwbFO7UyJztKYl7i4CGssmjODKVp95MRzfVyiKRd2i72TzG4qaCcvuGb5CWNBHba6apajnDVz-7tOyFBYgLASg_WM0jOpmhezMR6zwXkykQzlxGJmmpGJ4YxW4weHl8y9W4cGZAb5CJ7YoCTsbjvFJjTKczb8oB_N_pYjlKYiDIYxEuh85g1z6iJmzmGQBXkrJhr0MI2dBxuOY5lOMVrlAxQZ_-YqEE44PBTxcYiway7etN80V40DL1cROx-ekSSphBGI3aeXettHLNucOXE7kvVUDGt8yAG7Ptgo3frQnmVUHmPa8UbQcdkD3W2AR09frAujJNYsbxM52Kja1uIJ24eQAPpXZMY0fCCxBoZGZU_5gQQQOAMzjFaysWLaIsZJFliE9KnhYx-NglPAD2VLc4tAr9AwhcMKSQ0yL0Xb7vCa-xlgWC8saa67V6HV70VBR2nQ5qQDPHW2dO8uP08SMNOobAWbb06MHy84babArnP9weVoXB_ACjTEkVSfaoyN1jzi_X22bZUGNG1-R5KhAHFKv4QJbaPfv8tL4UiNidjf5h3gSV9JdMcIk-P1ftbQaf0zBBs4bHpAA0A8Vr-Cdhn82aCBHn2N93HLZ5mFZVBYa_DNdMGTgrm2lPLkGGM6_v0redDA-1Pmkw_7NsgpWPEFFtDfhYuft3ItuP-N-cLVo6iHoMPONnr9z3M3pOEbpEx2EHTEO6xq7EA3f76UIbhSE3g\"]");
+
+
         body.put(AZT,input.get(AZT));
         body.put("cookiesDisabled","false");
         body.put("deviceinfo","[\""+input.get(GSFID)+"\","+VERSIONSDK+","+deviceInfoProvider.getPlayServicesVersion() +",[],true,\""+RU+"\",0,null,[],\"EmbeddedSetupAndroid\",null,[0,null,[],null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,null,7,null,null,[],null,null,null,[],[]],1,null,null,null,2,null,false,2]");
@@ -105,12 +111,14 @@ public class SendEmail extends Requests {
 
         switch(status) {
             case 1:
-                System.out.println(" mailing address is correct");
+                System.out.println("mailing address is correct");
                 break;
             case 5:
                 throw new IOException("captcha");
             case 7:
                 throw new IOException("Incorrect email address");
+            case 16:
+                throw new IOException("EMAIL ERROR");
             default:
                 throw new IOException("EMAIL ERROR");
         }

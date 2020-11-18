@@ -21,7 +21,7 @@ public class PlayStoreApiBuilderTest {
         httpClientAdapter = new MockOkHttpClientAdapter();
         Properties properties = new Properties();
         try {
-            properties.load(getClass().getClassLoader().getSystemResourceAsStream("device-irbis.properties"));
+            properties.load(getClass().getClassLoader().getSystemResourceAsStream("device2.properties"));
         } catch (IOException e) {
             fail("device-honami.properties not found");
         }
